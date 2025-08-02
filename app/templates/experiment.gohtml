@@ -1,0 +1,143 @@
+{{define "title"}}Traefik Playground{{end}}
+
+{{define "main"}}
+  <form action="/run"
+        method="post"
+        class="experiment">
+
+    <div class="main">
+      <div class="box editor">
+        <div class="box-content">
+          <textarea id="dynamic-config-editor"
+                    class="editor"
+                    name="dynamicConfig"
+                    aria-label="configuration"
+                    spellcheck="false"
+                    required>{{.DynamicConfig}}</textarea>
+        </div>
+      </div>
+      <div class="box console" data-resizable="vertical:top">
+        <div class="box-title">Console</div>
+        <div class="box-content output">
+          {{if .Error}}
+            <span class="error">{{.Error}}</span>
+          {{end}}
+          {{if .Result}}
+            {{range .Result.Logs}}
+              <div class="log-line">
+                <span class="timestamp">{{.Timestamp}}</span>
+                <span class="level {{.Level}}">{{.Level}}</span>
+                {{if .Message}}
+                  <span class="message">{{.Message}}</span>
+                  {{if .Error}}
+                    <span class="field">
+                      <span class="field-key">error</span>=<span class="field-value">{{.Error}}</span>
+                    </span>
+                  {{end}}
+                {{else if .Error}}
+                  <span class="message">{{.Error}}</span>
+                {{end}}
+                {{range $key, $value := .Fields}}
+                  <span class="field">
+                    <span class="field-key">{{$key}}</span>=<span class="field-value">{{printf "%s" $value}}</span>
+                  </span>
+                {{end}}
+              </div>
+            {{end}}
+          {{end}}
+        </div>
+      </div>
+    </div>
+
+    <aside data-resizable="horizontal:left">
+      <div class="box request">
+        <div class="box-title">Request</div>
+        <div class="box-content">
+          <fieldset>
+            <legend>Endpoint</legend>
+
+            <div class="input-group">
+              <select name="request.method" aria-label="method" required>
+                <option value="GET" {{if or (eq .Request.Method "GET") (not .Request.Method) }}selected{{end}}>GET</option>
+                <option value="POST" {{if eq .Request.Method "POST"}}selected{{end}}>POST</option>
+                <option value="PUT" {{if eq .Request.Method "PUT"}}selected{{end}}>PUT</option>
+                <option value="DELETE" {{if eq .Request.Method "DELETE"}}selected{{end}}>DELETE</option>
+                <option value="PATCH" {{if eq .Request.Method "PATH"}}selected{{end}}>PATCH</option>
+              </select>
+
+              <input name="request.url"
+                     aria-label="url"
+                     type="url"
+                     placeholder="https://example.com"
+                     value="{{.Request.URL}}"
+                     required />
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Headers</legend>
+
+            <textarea id="headers" name="request.headers" aria-label="headers" rows=4>{{.Request.Headers}}</textarea>
+          </fieldset>
+
+          <fieldset>
+            <legend>Body</legend>
+
+            <textarea name="request.body" aria-label="body" rows=10>{{.Request.Body}}</textarea>
+          </fieldset>
+        </div>
+        <div class="box-footer">
+          <div class="button-group">
+            <button type="submit" title="Run experiment">Run</button>
+
+            <button type="submit"
+                    title="{{if or (not .RunBundle) .ShareURL}}{{if not .RunBundle}}Run an experiment first to share it{{else}}This experiment is already shared{{end}}{{else}}Share experiment{{end}}"
+                    class="secondary"
+                    value="Share"
+                    form="share"
+                    {{if or (not .RunBundle) .ShareURL }}disabled{{end}}>
+              Share
+            </button>
+            <button type="submit"
+                    title="{{if not .RunBundle}}Run an experiment first to export it{{else}}Export as docker-compose{{end}}"
+                    class="secondary"
+                    value="Export"
+                    form="export"
+                    {{if not .RunBundle}}disabled{{end}}>
+              Export
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="box result" data-resizable="vertical:top">
+        <div class="box-title">Response</div>
+        <div class="box-content output">
+          {{if .Result}}
+            <div class="status-line">
+              {{.Result.Response.Proto}} <span class="status-code">{{.Result.Response.StatusCode}}</span> {{statusText .Result.Response.StatusCode}}
+            </div>
+            {{range $key, $value := .Result.Response.Headers}}
+              <div class="header-line">
+                <span class="header-key">{{$key}}</span>
+                <span class="header-value">{{join $value ", "}}</span>
+              </div>
+            {{end}}
+            <pre class="response-body">{{ printf "%s" .Result.Response.Body}}</pre>
+          {{end}}
+        </div>
+      </div>
+    </aside>
+  </form>
+
+  <form id="share" method="post" action="/share">
+    <input type="hidden" name="runBundle" value="{{.RunBundle}}">
+    <input type="hidden" name="runBundleSignature" value="{{.RunBundleSignature}}">
+  </form>
+
+  <form id="export" method="post" action="/export">
+    <input type="hidden" name="runBundle" value="{{.RunBundle}}">
+    <input type="hidden" name="runBundleSignature" value="{{.RunBundleSignature}}">
+  </form>
+{{end}}
+

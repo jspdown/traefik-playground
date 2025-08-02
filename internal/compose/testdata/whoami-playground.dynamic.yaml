@@ -1,0 +1,14 @@
+http:
+  routers:
+    api:
+      rule: PathPrefix(`/foo`)
+      entryPoints: [web]
+      service: whoami@playground
+      middlewares:
+        - add-header
+
+  middlewares:
+    add-header:
+      headers:
+        customRequestHeaders:
+          X-Request-Header: request

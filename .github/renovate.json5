@@ -1,0 +1,39 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "packageRules": [
+    {
+      "groupName": "Go dependencies",
+      "groupSlug": "go-dependencies",
+      "matchManagers": [
+        "gomod"
+      ],
+      "matchDatasources": [
+        "go"
+      ]
+    }
+  ],
+  "postUpdateOptions":[
+    "gomodTidy"
+  ],
+  "npm": {
+    "enabled": true
+  },
+  "nix": {
+    "enabled": true
+  },
+  "ignoreDeps": [
+    // Go mod replaces.
+    "github.com/abbot/go-http-auth",
+    "github.com/mailgun/minheap",
+    "github.com/gorilla/mux",
+
+    // Cannot update until Traefik updates to avoid version conflicts.
+    "github.com/golang-migrate/migrate/v4",
+    "github.com/testcontainers/testcontainers-go",
+    "github.com/testcontainers/testcontainers-go/modules/postgres",
+    "github.com/testcontainers/testcontainers-go/modules/compose"
+  ]
+}

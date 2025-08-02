@@ -1,0 +1,35 @@
+{
+  "http": {
+    "routers": {
+      "api": {
+        "entryPoints": ["web"],
+        "service": "whoami@playground",
+        "rule": "PathPrefix(`/foo`)",
+        "middlewares": ["add-header"]
+      }
+    },
+    "services": {
+      "api@file": {
+        "loadBalancer": {
+          "servers": [
+            {"url": "http://10.10.10.10"}
+          ]
+        }
+      }
+    },
+    "middlewares": {
+      "add-header": {
+        "headers": {
+          "customRequestHeaders": {
+            "X-Request-Header": "request"
+          },
+          "customResponseHeaders": {
+            "X-Response-Header": "response"
+          }
+        }
+      }
+    }
+  },
+  "tcp": {},
+  "tls": {}
+}

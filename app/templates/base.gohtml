@@ -1,0 +1,40 @@
+{{define "base"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>{{template "title" .}}</title>
+
+  <link rel="stylesheet" href="/assets/style.css">
+  <script type="application/javascript">
+    document.documentElement.classList.add('js-enabled');
+  </script>
+</head>
+<body>
+  <header>
+    <h1><a href="/"><span class="product-name">Traefik</span> Playground</a></h1>
+    <div class="right">
+      <a href="/info" title="Information">
+        <img src="/assets/info.svg" alt="Information icon">
+      </a>
+      <a href="https://github.com/jspdown/traefik-playground" target="_blank" title="GitHub Repository">
+        <img src="/assets/github.svg" alt="GitHub icon">
+      </a>
+    </div>
+  </header>
+
+  <main>
+    {{with .Main}}
+      {{template "main" .}}
+    {{else}}
+      {{template "main"}}
+    {{end}}
+  </main>
+
+  <script type="application/javascript" src="/assets/index.js"></script>
+</body>
+</html>
+{{end}}

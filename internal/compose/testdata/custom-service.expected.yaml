@@ -1,0 +1,49 @@
+configs:
+  traefik-dynamic:
+    content: |
+      http:
+        routers:
+          api:
+            rule: PathPrefix(`/foo`)
+            entryPoints: [ web ]
+            service: api
+
+        services:
+          api:
+            loadBalancer:
+              servers:
+              - url: http://whoami:80
+
+
+services:
+  traefik:
+    image: traefik:v3.4.4
+    command:
+      - --api.insecure=true
+      - --providers.file.filename=/etc/traefik/dynamic.yaml
+      - --providers.docker=true
+      - --providers.docker.exposedByDefault=false
+      - --entrypoints.web.address=:80
+      - --log.level=debug
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    configs:
+      - source: traefik-dynamic
+        target: /etc/traefik/dynamic.yaml
+    networks:
+      - traefik-network
+
+  whoami:
+    image: traefik/whoami
+    networks:
+      - traefik-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.whoami.loadbalancer.server.port=80"
+
+networks:
+  traefik-network:
+    driver: bridge
