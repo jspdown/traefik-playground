@@ -1,0 +1,15 @@
+name: Lint
+
+on:
+  workflow_call: {}
+
+jobs:
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+      - name: Lint
+        run: nix develop --command make lint

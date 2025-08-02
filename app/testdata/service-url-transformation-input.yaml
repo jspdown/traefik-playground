@@ -1,0 +1,6 @@
+http:
+  services:
+    whoami:
+      loadBalancer:
+        servers:
+        - url: http://10.10.10.10

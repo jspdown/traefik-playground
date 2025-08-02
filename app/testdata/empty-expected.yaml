@@ -1,0 +1,37 @@
+version: '3.8'
+
+configs:
+  traefik-dynamic:
+    content: |
+
+
+services:
+  traefik:
+    image: traefik:v3.4.4
+    command:
+      - --api.insecure=true
+      - --providers.file.filename=/etc/traefik/dynamic.yml
+      - --providers.docker=true
+      - --entrypoints.web.address=:80
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    configs:
+      - source: traefik-dynamic
+        target: /etc/traefik/dynamic.yml
+    networks:
+      - traefik-network
+
+  whoami:
+    image: traefik/whoami
+    networks:
+      - traefik-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.whoami.loadbalancer.server.port=80"
+
+networks:
+  traefik-network:
+    driver: bridge

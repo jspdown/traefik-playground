@@ -1,0 +1,1741 @@
+{
+  "$id": "https://traefik-playground.ozouf.fr/traefik-v3.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "definitions": {
+    "DynamicAddPrefix": {
+      "additionalProperties": false,
+      "properties": {
+        "prefix": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicBasicAuth": {
+      "additionalProperties": false,
+      "properties": {
+        "headerField": {
+          "type": "string"
+        },
+        "realm": {
+          "type": "string"
+        },
+        "removeHeader": {
+          "type": "boolean"
+        },
+        "users": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "usersFile": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicBuffering": {
+      "additionalProperties": false,
+      "properties": {
+        "maxRequestBodyBytes": {
+          "type": "integer"
+        },
+        "maxResponseBodyBytes": {
+          "type": "integer"
+        },
+        "memRequestBodyBytes": {
+          "type": "integer"
+        },
+        "memResponseBodyBytes": {
+          "type": "integer"
+        },
+        "retryExpression": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicChain": {
+      "additionalProperties": false,
+      "properties": {
+        "middlewares": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicCircuitBreaker": {
+      "additionalProperties": false,
+      "properties": {
+        "checkPeriod": {
+          "type": "string"
+        },
+        "expression": {
+          "type": "string"
+        },
+        "fallbackDuration": {
+          "type": "string"
+        },
+        "recoveryDuration": {
+          "type": "string"
+        },
+        "responseCode": {
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicClientTLS": {
+      "additionalProperties": false,
+      "properties": {
+        "ca": {
+          "type": "string"
+        },
+        "caOptional": {
+          "type": "boolean"
+        },
+        "cert": {
+          "type": "string"
+        },
+        "insecureSkipVerify": {
+          "type": "boolean"
+        },
+        "key": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicCompress": {
+      "additionalProperties": false,
+      "properties": {
+        "defaultEncoding": {
+          "type": "string"
+        },
+        "encodings": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "excludedContentTypes": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "includedContentTypes": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "minResponseBodyBytes": {
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicContentType": {
+      "additionalProperties": false,
+      "properties": {
+        "autoDetect": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicCookie": {
+      "additionalProperties": false,
+      "properties": {
+        "httpOnly": {
+          "type": "boolean"
+        },
+        "maxAge": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "sameSite": {
+          "type": "string"
+        },
+        "secure": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicDigestAuth": {
+      "additionalProperties": false,
+      "properties": {
+        "headerField": {
+          "type": "string"
+        },
+        "realm": {
+          "type": "string"
+        },
+        "removeHeader": {
+          "type": "boolean"
+        },
+        "users": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "usersFile": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicErrorPage": {
+      "additionalProperties": false,
+      "properties": {
+        "query": {
+          "type": "string"
+        },
+        "service": {
+          "type": "string"
+        },
+        "status": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicFailover": {
+      "additionalProperties": false,
+      "properties": {
+        "fallback": {
+          "type": "string"
+        },
+        "healthCheck": {
+          "$ref": "#/definitions/DynamicHealthCheck"
+        },
+        "service": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicForwardAuth": {
+      "additionalProperties": false,
+      "properties": {
+        "addAuthCookiesToResponse": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "address": {
+          "type": "string"
+        },
+        "authRequestHeaders": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "authResponseHeaders": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "authResponseHeadersRegex": {
+          "type": "string"
+        },
+        "headerField": {
+          "type": "string"
+        },
+        "tls": {
+          "$ref": "#/definitions/DynamicClientTLS"
+        },
+        "trustForwardHeader": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicForwardingTimeouts": {
+      "additionalProperties": false,
+      "properties": {
+        "dialTimeout": {
+          "type": "string"
+        },
+        "idleConnTimeout": {
+          "type": "string"
+        },
+        "pingTimeout": {
+          "type": "string"
+        },
+        "readIdleTimeout": {
+          "type": "string"
+        },
+        "responseHeaderTimeout": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicGrpcWeb": {
+      "additionalProperties": false,
+      "properties": {
+        "allowOrigins": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicHTTPConfiguration": {
+      "additionalProperties": false,
+      "properties": {
+        "middlewares": {
+          "additionalProperties": {
+            "$ref": "#/definitions/DynamicMiddleware"
+          },
+          "type": "object"
+        },
+        "models": {
+          "additionalProperties": {
+            "$ref": "#/definitions/DynamicModel"
+          },
+          "type": "object"
+        },
+        "routers": {
+          "additionalProperties": {
+            "$ref": "#/definitions/DynamicRouter"
+          },
+          "type": "object"
+        },
+        "serversTransports": {
+          "additionalProperties": {
+            "$ref": "#/definitions/DynamicServersTransport"
+          },
+          "type": "object"
+        },
+        "services": {
+          "additionalProperties": {
+            "$ref": "#/definitions/DynamicService"
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicHeaderModifier": {
+      "additionalProperties": false,
+      "properties": {
+        "add": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "remove": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "set": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicHeaders": {
+      "additionalProperties": false,
+      "properties": {
+        "accessControlAllowCredentials": {
+          "type": "boolean"
+        },
+        "accessControlAllowHeaders": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "accessControlAllowMethods": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "accessControlAllowOriginList": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "accessControlAllowOriginListRegex": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "accessControlExposeHeaders": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "accessControlMaxAge": {
+          "type": "integer"
+        },
+        "addVaryHeader": {
+          "type": "boolean"
+        },
+        "allowedHosts": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "browserXssFilter": {
+          "type": "boolean"
+        },
+        "contentSecurityPolicy": {
+          "type": "string"
+        },
+        "contentSecurityPolicyReportOnly": {
+          "type": "string"
+        },
+        "contentTypeNosniff": {
+          "type": "boolean"
+        },
+        "customBrowserXSSValue": {
+          "type": "string"
+        },
+        "customFrameOptionsValue": {
+          "type": "string"
+        },
+        "customRequestHeaders": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "customResponseHeaders": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "featurePolicy": {
+          "type": "string"
+        },
+        "forceSTSHeader": {
+          "type": "boolean"
+        },
+        "frameDeny": {
+          "type": "boolean"
+        },
+        "hostsProxyHeaders": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "isDevelopment": {
+          "type": "boolean"
+        },
+        "permissionsPolicy": {
+          "type": "string"
+        },
+        "publicKey": {
+          "type": "string"
+        },
+        "referrerPolicy": {
+          "type": "string"
+        },
+        "sslForceHost": {
+          "type": "boolean"
+        },
+        "sslHost": {
+          "type": "string"
+        },
+        "sslProxyHeaders": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "sslRedirect": {
+          "type": "boolean"
+        },
+        "sslTemporaryRedirect": {
+          "type": "boolean"
+        },
+        "stsIncludeSubdomains": {
+          "type": "boolean"
+        },
+        "stsPreload": {
+          "type": "boolean"
+        },
+        "stsSeconds": {
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicHealthCheck": {
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "DynamicIPAllowList": {
+      "additionalProperties": false,
+      "properties": {
+        "ipStrategy": {
+          "$ref": "#/definitions/DynamicIPStrategy"
+        },
+        "rejectStatusCode": {
+          "type": "integer"
+        },
+        "sourceRange": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicIPStrategy": {
+      "additionalProperties": false,
+      "properties": {
+        "depth": {
+          "type": "integer"
+        },
+        "excludedIPs": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "ipv6Subnet": {
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicIPWhiteList": {
+      "additionalProperties": false,
+      "properties": {
+        "ipStrategy": {
+          "$ref": "#/definitions/DynamicIPStrategy"
+        },
+        "sourceRange": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicInFlightReq": {
+      "additionalProperties": false,
+      "properties": {
+        "amount": {
+          "type": "integer"
+        },
+        "sourceCriterion": {
+          "$ref": "#/definitions/DynamicSourceCriterion"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicMiddleware": {
+      "additionalProperties": false,
+      "properties": {
+        "URLRewrite": {
+          "$ref": "#/definitions/DynamicURLRewrite"
+        },
+        "addPrefix": {
+          "$ref": "#/definitions/DynamicAddPrefix"
+        },
+        "basicAuth": {
+          "$ref": "#/definitions/DynamicBasicAuth"
+        },
+        "buffering": {
+          "$ref": "#/definitions/DynamicBuffering"
+        },
+        "chain": {
+          "$ref": "#/definitions/DynamicChain"
+        },
+        "circuitBreaker": {
+          "$ref": "#/definitions/DynamicCircuitBreaker"
+        },
+        "compress": {
+          "$ref": "#/definitions/DynamicCompress"
+        },
+        "contentType": {
+          "$ref": "#/definitions/DynamicContentType"
+        },
+        "digestAuth": {
+          "$ref": "#/definitions/DynamicDigestAuth"
+        },
+        "errors": {
+          "$ref": "#/definitions/DynamicErrorPage"
+        },
+        "forwardAuth": {
+          "$ref": "#/definitions/DynamicForwardAuth"
+        },
+        "grpcWeb": {
+          "$ref": "#/definitions/DynamicGrpcWeb"
+        },
+        "headers": {
+          "$ref": "#/definitions/DynamicHeaders"
+        },
+        "inFlightReq": {
+          "$ref": "#/definitions/DynamicInFlightReq"
+        },
+        "ipAllowList": {
+          "$ref": "#/definitions/DynamicIPAllowList"
+        },
+        "ipWhiteList": {
+          "$ref": "#/definitions/DynamicIPWhiteList"
+        },
+        "passTLSClientCert": {
+          "$ref": "#/definitions/DynamicPassTLSClientCert"
+        },
+        "plugin": {
+          "additionalProperties": {
+            "additionalProperties": {},
+            "type": "object"
+          },
+          "type": "object"
+        },
+        "rateLimit": {
+          "$ref": "#/definitions/DynamicRateLimit"
+        },
+        "redirectRegex": {
+          "$ref": "#/definitions/DynamicRedirectRegex"
+        },
+        "redirectScheme": {
+          "$ref": "#/definitions/DynamicRedirectScheme"
+        },
+        "replacePath": {
+          "$ref": "#/definitions/DynamicReplacePath"
+        },
+        "replacePathRegex": {
+          "$ref": "#/definitions/DynamicReplacePathRegex"
+        },
+        "requestHeaderModifier": {
+          "$ref": "#/definitions/DynamicHeaderModifier"
+        },
+        "requestRedirect": {
+          "$ref": "#/definitions/DynamicRequestRedirect"
+        },
+        "responseHeaderModifier": {
+          "$ref": "#/definitions/DynamicHeaderModifier"
+        },
+        "retry": {
+          "$ref": "#/definitions/DynamicRetry"
+        },
+        "stripPrefix": {
+          "$ref": "#/definitions/DynamicStripPrefix"
+        },
+        "stripPrefixRegex": {
+          "$ref": "#/definitions/DynamicStripPrefixRegex"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicMirrorService": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "percent": {
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicMirroring": {
+      "additionalProperties": false,
+      "properties": {
+        "healthCheck": {
+          "$ref": "#/definitions/DynamicHealthCheck"
+        },
+        "maxBodySize": {
+          "type": "integer"
+        },
+        "mirrorBody": {
+          "type": "boolean"
+        },
+        "mirrors": {
+          "items": {
+            "$ref": "#/definitions/DynamicMirrorService"
+          },
+          "type": "array"
+        },
+        "service": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicModel": {
+      "additionalProperties": false,
+      "properties": {
+        "middlewares": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "tls": {
+          "$ref": "#/definitions/DynamicRouterTLSConfig"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicPassTLSClientCert": {
+      "additionalProperties": false,
+      "properties": {
+        "info": {
+          "$ref": "#/definitions/DynamicTLSClientCertificateInfo"
+        },
+        "pem": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicProxyProtocol": {
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicRateLimit": {
+      "additionalProperties": false,
+      "properties": {
+        "average": {
+          "type": "integer"
+        },
+        "burst": {
+          "type": "integer"
+        },
+        "period": {
+          "type": "string"
+        },
+        "sourceCriterion": {
+          "$ref": "#/definitions/DynamicSourceCriterion"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicRedirectRegex": {
+      "additionalProperties": false,
+      "properties": {
+        "permanent": {
+          "type": "boolean"
+        },
+        "regex": {
+          "type": "string"
+        },
+        "replacement": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicRedirectScheme": {
+      "additionalProperties": false,
+      "properties": {
+        "permanent": {
+          "type": "boolean"
+        },
+        "port": {
+          "type": "string"
+        },
+        "scheme": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicReplacePath": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicReplacePathRegex": {
+      "additionalProperties": false,
+      "properties": {
+        "regex": {
+          "type": "string"
+        },
+        "replacement": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicRequestRedirect": {
+      "additionalProperties": false,
+      "properties": {
+        "hostname": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "pathPrefix": {
+          "type": "string"
+        },
+        "port": {
+          "type": "string"
+        },
+        "scheme": {
+          "type": "string"
+        },
+        "statusCode": {
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicResponseForwarding": {
+      "additionalProperties": false,
+      "properties": {
+        "flushInterval": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicRetry": {
+      "additionalProperties": false,
+      "properties": {
+        "attempts": {
+          "type": "integer"
+        },
+        "initialInterval": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicRouter": {
+      "additionalProperties": false,
+      "properties": {
+        "entryPoints": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "middlewares": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "priority": {
+          "type": "integer"
+        },
+        "rule": {
+          "type": "string"
+        },
+        "ruleSyntax": {
+          "type": "string"
+        },
+        "service": {
+          "type": "string"
+        },
+        "tls": {
+          "$ref": "#/definitions/DynamicRouterTLSConfig"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicRouterTCPTLSConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "certResolver": {
+          "type": "string"
+        },
+        "domains": {
+          "items": {
+            "$ref": "#/definitions/TypesDomain"
+          },
+          "type": "array"
+        },
+        "options": {
+          "type": "string"
+        },
+        "passthrough": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "passthrough"
+      ],
+      "type": "object"
+    },
+    "DynamicRouterTLSConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "certResolver": {
+          "type": "string"
+        },
+        "domains": {
+          "items": {
+            "$ref": "#/definitions/TypesDomain"
+          },
+          "type": "array"
+        },
+        "options": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicServer": {
+      "additionalProperties": false,
+      "properties": {
+        "preservePath": {
+          "type": "boolean"
+        },
+        "url": {
+          "type": "string"
+        },
+        "weight": {
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicServerHealthCheck": {
+      "additionalProperties": false,
+      "properties": {
+        "followRedirects": {
+          "type": "boolean"
+        },
+        "headers": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        },
+        "hostname": {
+          "type": "string"
+        },
+        "interval": {
+          "type": "string"
+        },
+        "method": {
+          "type": "string"
+        },
+        "mode": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "port": {
+          "type": "integer"
+        },
+        "scheme": {
+          "type": "string"
+        },
+        "status": {
+          "type": "integer"
+        },
+        "timeout": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicServersLoadBalancer": {
+      "additionalProperties": false,
+      "properties": {
+        "healthCheck": {
+          "$ref": "#/definitions/DynamicServerHealthCheck"
+        },
+        "passHostHeader": {
+          "type": "boolean"
+        },
+        "responseForwarding": {
+          "$ref": "#/definitions/DynamicResponseForwarding"
+        },
+        "servers": {
+          "items": {
+            "$ref": "#/definitions/DynamicServer"
+          },
+          "type": "array"
+        },
+        "serversTransport": {
+          "type": "string"
+        },
+        "sticky": {
+          "$ref": "#/definitions/DynamicSticky"
+        }
+      },
+      "required": [
+        "passHostHeader"
+      ],
+      "type": "object"
+    },
+    "DynamicServersTransport": {
+      "additionalProperties": false,
+      "properties": {
+        "certificates": {
+          "items": {
+            "$ref": "#/definitions/TLSCertificate"
+          },
+          "type": "array"
+        },
+        "disableHTTP2": {
+          "type": "boolean"
+        },
+        "forwardingTimeouts": {
+          "$ref": "#/definitions/DynamicForwardingTimeouts"
+        },
+        "insecureSkipVerify": {
+          "type": "boolean"
+        },
+        "maxIdleConnsPerHost": {
+          "type": "integer"
+        },
+        "peerCertURI": {
+          "type": "string"
+        },
+        "rootCAs": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "serverName": {
+          "type": "string"
+        },
+        "spiffe": {
+          "$ref": "#/definitions/DynamicSpiffe"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicService": {
+      "additionalProperties": false,
+      "properties": {
+        "failover": {
+          "$ref": "#/definitions/DynamicFailover"
+        },
+        "loadBalancer": {
+          "$ref": "#/definitions/DynamicServersLoadBalancer"
+        },
+        "mirroring": {
+          "$ref": "#/definitions/DynamicMirroring"
+        },
+        "weighted": {
+          "$ref": "#/definitions/DynamicWeightedRoundRobin"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicSourceCriterion": {
+      "additionalProperties": false,
+      "properties": {
+        "ipStrategy": {
+          "$ref": "#/definitions/DynamicIPStrategy"
+        },
+        "requestHeaderName": {
+          "type": "string"
+        },
+        "requestHost": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicSpiffe": {
+      "additionalProperties": false,
+      "properties": {
+        "ids": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "trustDomain": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicSticky": {
+      "additionalProperties": false,
+      "properties": {
+        "cookie": {
+          "$ref": "#/definitions/DynamicCookie"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicStripPrefix": {
+      "additionalProperties": false,
+      "properties": {
+        "forceSlash": {
+          "type": "boolean"
+        },
+        "prefixes": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicStripPrefixRegex": {
+      "additionalProperties": false,
+      "properties": {
+        "regex": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicTCPConfiguration": {
+      "additionalProperties": false,
+      "properties": {
+        "middlewares": {
+          "additionalProperties": {
+            "$ref": "#/definitions/DynamicTCPMiddleware"
+          },
+          "type": "object"
+        },
+        "routers": {
+          "additionalProperties": {
+            "$ref": "#/definitions/DynamicTCPRouter"
+          },
+          "type": "object"
+        },
+        "serversTransports": {
+          "additionalProperties": {
+            "$ref": "#/definitions/DynamicTCPServersTransport"
+          },
+          "type": "object"
+        },
+        "services": {
+          "additionalProperties": {
+            "$ref": "#/definitions/DynamicTCPService"
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicTCPIPAllowList": {
+      "additionalProperties": false,
+      "properties": {
+        "sourceRange": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicTCPIPWhiteList": {
+      "additionalProperties": false,
+      "properties": {
+        "sourceRange": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicTCPInFlightConn": {
+      "additionalProperties": false,
+      "properties": {
+        "amount": {
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicTCPMiddleware": {
+      "additionalProperties": false,
+      "properties": {
+        "inFlightConn": {
+          "$ref": "#/definitions/DynamicTCPInFlightConn"
+        },
+        "ipAllowList": {
+          "$ref": "#/definitions/DynamicTCPIPAllowList"
+        },
+        "ipWhiteList": {
+          "$ref": "#/definitions/DynamicTCPIPWhiteList"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicTCPRouter": {
+      "additionalProperties": false,
+      "properties": {
+        "entryPoints": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "middlewares": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "priority": {
+          "type": "integer"
+        },
+        "rule": {
+          "type": "string"
+        },
+        "ruleSyntax": {
+          "type": "string"
+        },
+        "service": {
+          "type": "string"
+        },
+        "tls": {
+          "$ref": "#/definitions/DynamicRouterTCPTLSConfig"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicTCPServer": {
+      "additionalProperties": false,
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "tls": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicTCPServersLoadBalancer": {
+      "additionalProperties": false,
+      "properties": {
+        "proxyProtocol": {
+          "$ref": "#/definitions/DynamicProxyProtocol"
+        },
+        "servers": {
+          "items": {
+            "$ref": "#/definitions/DynamicTCPServer"
+          },
+          "type": "array"
+        },
+        "serversTransport": {
+          "type": "string"
+        },
+        "terminationDelay": {
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicTCPServersTransport": {
+      "additionalProperties": false,
+      "properties": {
+        "dialKeepAlive": {
+          "type": "string"
+        },
+        "dialTimeout": {
+          "type": "string"
+        },
+        "terminationDelay": {
+          "type": "string"
+        },
+        "tls": {
+          "$ref": "#/definitions/DynamicTLSClientConfig"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicTCPService": {
+      "additionalProperties": false,
+      "properties": {
+        "loadBalancer": {
+          "$ref": "#/definitions/DynamicTCPServersLoadBalancer"
+        },
+        "weighted": {
+          "$ref": "#/definitions/DynamicTCPWeightedRoundRobin"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicTCPWRRService": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "weight": {
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicTCPWeightedRoundRobin": {
+      "additionalProperties": false,
+      "properties": {
+        "services": {
+          "items": {
+            "$ref": "#/definitions/DynamicTCPWRRService"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicTLSClientCertificateInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "issuer": {
+          "$ref": "#/definitions/DynamicTLSClientCertificateIssuerDNInfo"
+        },
+        "notAfter": {
+          "type": "boolean"
+        },
+        "notBefore": {
+          "type": "boolean"
+        },
+        "sans": {
+          "type": "boolean"
+        },
+        "serialNumber": {
+          "type": "boolean"
+        },
+        "subject": {
+          "$ref": "#/definitions/DynamicTLSClientCertificateSubjectDNInfo"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicTLSClientCertificateIssuerDNInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "commonName": {
+          "type": "boolean"
+        },
+        "country": {
+          "type": "boolean"
+        },
+        "domainComponent": {
+          "type": "boolean"
+        },
+        "locality": {
+          "type": "boolean"
+        },
+        "organization": {
+          "type": "boolean"
+        },
+        "province": {
+          "type": "boolean"
+        },
+        "serialNumber": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicTLSClientCertificateSubjectDNInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "commonName": {
+          "type": "boolean"
+        },
+        "country": {
+          "type": "boolean"
+        },
+        "domainComponent": {
+          "type": "boolean"
+        },
+        "locality": {
+          "type": "boolean"
+        },
+        "organization": {
+          "type": "boolean"
+        },
+        "organizationalUnit": {
+          "type": "boolean"
+        },
+        "province": {
+          "type": "boolean"
+        },
+        "serialNumber": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicTLSClientConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "certificates": {
+          "items": {
+            "$ref": "#/definitions/TLSCertificate"
+          },
+          "type": "array"
+        },
+        "insecureSkipVerify": {
+          "type": "boolean"
+        },
+        "peerCertURI": {
+          "type": "string"
+        },
+        "rootCAs": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "serverName": {
+          "type": "string"
+        },
+        "spiffe": {
+          "$ref": "#/definitions/DynamicSpiffe"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicTLSConfiguration": {
+      "additionalProperties": false,
+      "properties": {
+        "certificates": {
+          "items": {
+            "$ref": "#/definitions/TLSCertAndStores"
+          },
+          "type": "array"
+        },
+        "options": {
+          "additionalProperties": {
+            "$ref": "#/definitions/TLSOptions"
+          },
+          "type": "object"
+        },
+        "stores": {
+          "additionalProperties": {
+            "$ref": "#/definitions/TLSStore"
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicUDPConfiguration": {
+      "additionalProperties": false,
+      "properties": {
+        "routers": {
+          "additionalProperties": {
+            "$ref": "#/definitions/DynamicUDPRouter"
+          },
+          "type": "object"
+        },
+        "services": {
+          "additionalProperties": {
+            "$ref": "#/definitions/DynamicUDPService"
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicUDPRouter": {
+      "additionalProperties": false,
+      "properties": {
+        "entryPoints": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "service": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicUDPServer": {
+      "additionalProperties": false,
+      "properties": {
+        "address": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicUDPServersLoadBalancer": {
+      "additionalProperties": false,
+      "properties": {
+        "servers": {
+          "items": {
+            "$ref": "#/definitions/DynamicUDPServer"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicUDPService": {
+      "additionalProperties": false,
+      "properties": {
+        "loadBalancer": {
+          "$ref": "#/definitions/DynamicUDPServersLoadBalancer"
+        },
+        "weighted": {
+          "$ref": "#/definitions/DynamicUDPWeightedRoundRobin"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicUDPWRRService": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "weight": {
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicUDPWeightedRoundRobin": {
+      "additionalProperties": false,
+      "properties": {
+        "services": {
+          "items": {
+            "$ref": "#/definitions/DynamicUDPWRRService"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicURLRewrite": {
+      "additionalProperties": false,
+      "properties": {
+        "hostname": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "pathPrefix": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicWRRService": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "weight": {
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "DynamicWeightedRoundRobin": {
+      "additionalProperties": false,
+      "properties": {
+        "healthCheck": {
+          "$ref": "#/definitions/DynamicHealthCheck"
+        },
+        "services": {
+          "items": {
+            "$ref": "#/definitions/DynamicWRRService"
+          },
+          "type": "array"
+        },
+        "sticky": {
+          "$ref": "#/definitions/DynamicSticky"
+        }
+      },
+      "type": "object"
+    },
+    "TLSCertAndStores": {
+      "additionalProperties": false,
+      "properties": {
+        "certFile": {
+          "type": "string"
+        },
+        "keyFile": {
+          "type": "string"
+        },
+        "stores": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "TLSCertificate": {
+      "additionalProperties": false,
+      "properties": {
+        "certFile": {
+          "type": "string"
+        },
+        "keyFile": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "TLSClientAuth": {
+      "additionalProperties": false,
+      "properties": {
+        "caFiles": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "clientAuthType": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "TLSGeneratedCert": {
+      "additionalProperties": false,
+      "properties": {
+        "domain": {
+          "$ref": "#/definitions/TypesDomain"
+        },
+        "resolver": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "TLSOptions": {
+      "additionalProperties": false,
+      "properties": {
+        "alpnProtocols": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "cipherSuites": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "clientAuth": {
+          "$ref": "#/definitions/TLSClientAuth"
+        },
+        "curvePreferences": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "maxVersion": {
+          "type": "string"
+        },
+        "minVersion": {
+          "type": "string"
+        },
+        "preferServerCipherSuites": {
+          "type": "boolean"
+        },
+        "sniStrict": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "TLSStore": {
+      "additionalProperties": false,
+      "properties": {
+        "defaultCertificate": {
+          "$ref": "#/definitions/TLSCertificate"
+        },
+        "defaultGeneratedCert": {
+          "$ref": "#/definitions/TLSGeneratedCert"
+        }
+      },
+      "type": "object"
+    },
+    "TypesDomain": {
+      "additionalProperties": false,
+      "properties": {
+        "main": {
+          "type": "string"
+        },
+        "sans": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "properties": {
+    "http": {
+      "$ref": "#/definitions/DynamicHTTPConfiguration"
+    },
+    "tcp": {
+      "$ref": "#/definitions/DynamicTCPConfiguration"
+    },
+    "tls": {
+      "$ref": "#/definitions/DynamicTLSConfiguration"
+    },
+    "udp": {
+      "$ref": "#/definitions/DynamicUDPConfiguration"
+    }
+  },
+  "title": "Traefik v3 Dynamic Configuration",
+  "type": "object"
+}

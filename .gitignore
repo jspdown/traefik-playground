@@ -1,0 +1,9 @@
+.idea
+dist
+/app/dist/*
+.yarn
+node_modules
+.DS_Store
+.traefik-playground.db
+
+!/**/.gitkeep

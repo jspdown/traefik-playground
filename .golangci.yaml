@@ -1,0 +1,136 @@
+version: "2"
+linters:
+  default: all
+  disable:
+    - cyclop
+    - dupword
+    - err113
+    - exhaustruct
+    - lll
+    - mnd
+    - nonamedreturns
+    - testpackage
+    - varnamelen
+    - wrapcheck
+    - wsl
+    - wsl_v5
+    - noinlineerr
+  settings:
+    depguard:
+      rules:
+        main:
+          allow:
+            - $gostd
+            - github.com/jspdown/traefik-playground
+            - github.com/traefik/traefik/v3
+            - github.com/rs/zerolog
+            - github.com/ettle/strcase
+            - github.com/urfave/cli/v3
+            - github.com/stretchr/testify
+            - github.com/danielgtaylor/huma/v2
+            - sigs.k8s.io/yaml
+            - github.com/lithammer/shortuuid/v4
+            - github.com/golang-migrate
+            - github.com/lib/pq
+            - github.com/gorilla/schema
+            - github.com/testcontainers/testcontainers-go
+            - gopkg.in/yaml.v3
+    forbidigo:
+      forbid:
+        - pattern: ^print(ln)?$
+        - pattern: ^spew\.Print(f|ln)?$
+        - pattern: ^spew\.Dump$
+    funlen:
+      lines: 100
+      statements: 120
+    goconst:
+      min-len: 3
+      min-occurrences: 4
+    gocyclo:
+      min-complexity: 14
+    godox:
+      keywords:
+        - FIXME
+    gomoddirectives:
+      replace-allow-list:
+        - github.com/abbot/go-http-auth
+        - github.com/gorilla/mux
+        - github.com/mailgun/minheap
+    govet:
+      disable:
+        - shadow
+        - fieldalignment
+      enable-all: true
+    misspell:
+      locale: US
+    revive:
+      rules:
+        - name: struct-tag
+        - name: blank-imports
+        - name: context-as-argument
+        - name: context-keys-type
+        - name: dot-imports
+        - name: error-return
+        - name: error-strings
+        - name: error-naming
+        - name: exported
+          disabled: true
+        - name: if-return
+        - name: increment-decrement
+        - name: var-naming
+        - name: var-declaration
+        - name: package-comments
+          disabled: true
+        - name: range
+        - name: receiver-naming
+        - name: time-naming
+        - name: unexported-return
+        - name: indent-error-flow
+        - name: errorf
+        - name: empty-block
+        - name: superfluous-else
+        - name: unused-parameter
+          disabled: true
+        - name: unreachable-code
+        - name: redefines-builtin-id
+    staticcheck:
+      checks:
+        - all
+        - -SA1019
+        - -ST1000
+    tagalign:
+      align: false
+      sort: true
+      order:
+        - json
+        - yaml
+  exclusions:
+    generated: lax
+    rules:
+      - linters:
+          - funlen
+          - gosec
+        path: .*_test.go
+      - linters:
+          - cyclop
+          - gocyclo
+        path: cmd/server/server.go
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0
+formatters:
+  enable:
+    - gci
+    - gofmt
+    - gofumpt
+    - goimports
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$

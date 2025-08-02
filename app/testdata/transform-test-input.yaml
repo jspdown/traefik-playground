@@ -1,0 +1,9 @@
+http:
+  routers:
+    api:
+      service: whoami@playground
+  services:
+    whoami:
+      loadBalancer:
+        servers:
+        - url: http://10.10.10.10
