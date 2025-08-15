@@ -2,7 +2,7 @@ module github.com/jspdown/traefik-playground
 
 go 1.24.0
 
-toolchain go1.24.5
+toolchain go1.25.0
 
 require (
 	github.com/danielgtaylor/huma/v2 v2.34.1
