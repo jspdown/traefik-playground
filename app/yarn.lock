@@ -807,8 +807,8 @@ __metadata:
   linkType: hard
 
 "better-ajv-errors@npm:^2.0.0":
-  version: 2.0.2
-  resolution: "better-ajv-errors@npm:2.0.2"
+  version: 2.0.3
+  resolution: "better-ajv-errors@npm:2.0.3"
   dependencies:
     "@babel/code-frame": "npm:^7.27.1"
     "@humanwhocodes/momoa": "npm:^2.0.4"
@@ -817,7 +817,7 @@ __metadata:
     leven: "npm:^3.1.0 < 4"
   peerDependencies:
     ajv: 4.11.8 - 8
-  checksum: 10c0/4265d9786ef821dec3a37abfc8c872ea460f79a0de9234c7c029234e5f1523da10fd1e299c5039ec6a7fedb20372638afdb1fa59de281afea84c006c9b26b146
+  checksum: 10c0/168f6ff274c1b71a897d0267a3a4c52a5e70e33b3d858d8c455b42e2da1abdf9a8d31cba09572bbd549778774a4f5c1cb2a1cec52f5298c9f7fb77f3cdfb95ba
   languageName: node
   linkType: hard
 
