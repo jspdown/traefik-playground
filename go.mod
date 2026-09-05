@@ -5,15 +5,15 @@ go 1.24.0
 toolchain go1.24.5
 
 require (
-	github.com/danielgtaylor/huma/v2 v2.34.1
+	github.com/danielgtaylor/huma/v2 v2.39.1
 	github.com/ettle/strcase v0.2.0
 	github.com/gorilla/schema v1.4.1
-	github.com/lib/pq v1.10.9
-	github.com/lithammer/shortuuid/v4 v4.2.0
-	github.com/rs/zerolog v1.34.0
-	github.com/stretchr/testify v1.10.0
-	github.com/traefik/traefik/v3 v3.4.4
-	github.com/urfave/cli/v3 v3.3.8
+	github.com/lib/pq v1.12.3
+	github.com/lithammer/shortuuid/v4 v4.3.0
+	github.com/rs/zerolog v1.35.1
+	github.com/stretchr/testify v1.12.1
+	github.com/traefik/traefik/v3 v3.7.13
+	github.com/urfave/cli/v3 v3.11.0
 	gopkg.in/yaml.v3 v3.0.1
 	sigs.k8s.io/yaml v1.6.0
 )
@@ -446,7 +446,7 @@ require (
 
 // Containous forks.
 replace (
-	github.com/abbot/go-http-auth => github.com/containous/go-http-auth v0.4.1-0.20200324110947-a37a7636d23e
+	github.com/abbot/go-http-auth => github.com/containous/go-http-auth 860ed7f246ff
 	github.com/gorilla/mux => github.com/containous/mux v0.0.0-20250523120546-41b6ec3aed59
 	github.com/mailgun/minheap => github.com/containous/minheap v0.0.0-20190809180810-6e71eb837595
 )
